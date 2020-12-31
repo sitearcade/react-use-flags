@@ -224,7 +224,7 @@ describe('parseFlags(flags, session, force)', () => {
       .toMatchInlineSnapshot(`
       Object {
         "empty": false,
-        "keyRange": false,
+        "keyRange": true,
         "keyRangeSizeIgnored": false,
         "keySize0": false,
         "keySize05": true,
@@ -259,9 +259,9 @@ describe('parseFlags(flags, session, force)', () => {
       Object {
         "empty": false,
         "keyRange": false,
-        "keyRangeSizeIgnored": true,
+        "keyRangeSizeIgnored": false,
         "keySize0": false,
-        "keySize05": false,
+        "keySize05": true,
         "keySize1": true,
         "keyStartFuture": false,
         "keyStartPast": true,
@@ -276,7 +276,7 @@ describe('parseFlags(flags, session, force)', () => {
       Object {
         "empty": false,
         "keyRange": true,
-        "keyRangeSizeIgnored": false,
+        "keyRangeSizeIgnored": true,
         "keySize0": false,
         "keySize05": true,
         "keySize1": true,

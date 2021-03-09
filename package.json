@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@sitearcade/uid": "^0.3.0",
+    "constate": "^3.2.0",
     "date-fns": "^2.19.0",
     "ramda": "^0.27.1"
   },

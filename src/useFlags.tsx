@@ -2,38 +2,26 @@
 
 import type {ParsedUrlQuery} from 'querystring';
 
-import {useMemo, createContext, useContext, PropsWithChildren} from 'react';
+import constate from 'constate';
+import {useMemo} from 'react';
 
-import {FlagRules, parseFlags, SessionMeta, Flags} from './parseFlags';
+import {FlagRules, parseFlags, SessionMeta} from './parseFlags';
 import {parseQuery} from './parseQuery';
 
 // types
 
-type FlagProps<T> = PropsWithChildren<{
-  flags?: FlagRules<T>;
+type FlagProps = {
+  flags?: FlagRules;
   session?: SessionMeta;
   query?: ParsedUrlQuery;
-}>
+}
 
 // context
 
-const FlagsContext = createContext<Flags>({});
-
-// hooks
-
-export function useFlags(): Flags {
-  return useContext(FlagsContext);
+function FlagsContext({flags, session, query}: FlagProps) {
+  return useMemo(() => (
+    parseFlags(flags, session, parseQuery(query))
+  ), [flags, session]);
 }
 
-// component
-
-export function FlagsProvider<T>({flags, session, query, ...rest}: FlagProps<T>) {
-  return (
-    <FlagsContext.Provider
-      {...rest}
-      value={useMemo(() => (
-        parseFlags(flags, session, parseQuery(query))
-      ), [flags, session])}
-    />
-  );
-}
+export const [FlagsProvider, useFlags] = constate(FlagsContext);

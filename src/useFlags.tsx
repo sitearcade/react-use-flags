@@ -4,14 +4,14 @@ import type {ParsedUrlQuery} from 'querystring';
 
 import {useMemo, createContext, useContext, PropsWithChildren} from 'react';
 
-import {FlagRules, parseFlags, RawSession} from './parseFlags';
+import {FlagRules, parseFlags, SessionMeta} from './parseFlags';
 import {parseQuery} from './parseQuery';
 
 // types
 
-type FlagProps = PropsWithChildren<{
-  flags?: FlagRules;
-  session?: RawSession;
+type FlagProps<T> = PropsWithChildren<{
+  flags?: FlagRules<T>;
+  session?: SessionMeta;
   query?: ParsedUrlQuery;
 }>
 
@@ -27,7 +27,7 @@ export function useFlags() {
 
 // component
 
-export function FlagsProvider({flags, session, query, ...rest}: FlagProps) {
+export function FlagsProvider<T>({flags, session, query, ...rest}: FlagProps<T>) {
   return (
     <FlagsContext.Provider
       {...rest}

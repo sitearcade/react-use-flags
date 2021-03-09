@@ -4,7 +4,7 @@ import type {ParsedUrlQuery} from 'querystring';
 
 import {useMemo, createContext, useContext, PropsWithChildren} from 'react';
 
-import {FlagRules, parseFlags, SessionMeta} from './parseFlags';
+import {FlagRules, parseFlags, SessionMeta, Flags} from './parseFlags';
 import {parseQuery} from './parseQuery';
 
 // types
@@ -17,11 +17,11 @@ type FlagProps<T> = PropsWithChildren<{
 
 // context
 
-const FlagsContext = createContext({});
+const FlagsContext = createContext<Flags>({});
 
 // hooks
 
-export function useFlags() {
+export function useFlags(): Flags {
   return useContext(FlagsContext);
 }
 

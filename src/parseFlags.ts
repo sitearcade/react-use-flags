@@ -25,6 +25,7 @@ type AndRule = {
   sample?: Sample | number;
 };
 
+export type Flags = Record<FlagName, FlagValue>;
 export type FlagRules<T = any> = Record<FlagName, FlagRule<T>>;
 export type FlagName = string;
 export type FlagRule<T = any> = PlainRule<T> | AndRule | OrRule;
@@ -93,7 +94,7 @@ export function parseFlags(
   flagRules: FlagRules = {},
   sessionMeta: SessionMeta = {},
   query: ParsedQuery = {},
-) {
+): Flags {
   const session: Session = {env, date: Date.now(), ...sessionMeta};
 
   const parseRule = (rule: FlagRule, name: FlagName): FlagValue => {

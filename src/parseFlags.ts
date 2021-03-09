@@ -15,8 +15,8 @@ type Sample = {
   until?: Date;
 };
 
-type FuncRule<T = {}> = (sess: Session & T) => FlagValue;
-type PlainRule<T = {}> = FuncRule<T> | string | number | Date | boolean | null;
+type FuncRule<T = SessionMeta> = (sess: Session & T) => FlagValue;
+type PlainRule<T = SessionMeta> = FuncRule<T> | string | number | Date | boolean | null;
 type OrRule = Array<FlagRule>;
 type AndRule = {
   [index: string]: unknown;
@@ -25,18 +25,13 @@ type AndRule = {
   sample?: Sample | number;
 };
 
-export type FlagRules<T = {}> = Record<FlagName, FlagRule<T>>;
+export type FlagRules<T = SessionMeta> = Record<FlagName, FlagRule<T>>;
 export type FlagName = string;
-export type FlagRule<T = {}> = PlainRule<T> | AndRule | OrRule;
+export type FlagRule<T = SessionMeta> = PlainRule<T> | AndRule | OrRule;
 export type FlagValue = string | number | boolean;
 
-type RawSession = Record<string, unknown>;
-
-export interface Session {
-  [index: string]: unknown;
-  date: number;
-  env: string;
-}
+export type SessionMeta = Record<string, unknown>;
+export type Session = {date: number; env: string;};
 
 // vars
 
@@ -48,7 +43,7 @@ const ensureArray = (val: unknown) => (
   Array.isArray(val) ? val : [val]
 );
 
-const parseMatch = (match: RawSession, sess: Session) =>
+const parseMatch = (match: SessionMeta, sess: Session) =>
   Object.keys(match).every((k) => (
     sess[k] ? R.intersection(
       ensureArray(match[k]),
@@ -96,10 +91,10 @@ const parseSample = (
 
 export function parseFlags(
   flagRules: FlagRules = {},
-  rawSession: RawSession = {},
+  sessionMeta: SessionMeta = {},
   query: ParsedQuery = {},
 ) {
-  const session: Session = {env, date: Date.now(), ...rawSession};
+  const session: Session = {env, date: Date.now(), ...sessionMeta};
 
   const parseRule = (rule: FlagRule, name: FlagName): FlagValue => {
     if (name && query[name]) {

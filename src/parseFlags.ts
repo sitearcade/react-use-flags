@@ -30,12 +30,13 @@ export type FlagName = string;
 export type FlagRule = PlainRule | AndRule | OrRule;
 export type FlagValue = string | number | boolean;
 
-export type RawSession = Record<string, unknown>;
-export type Session = {
+type RawSession = Record<string, unknown>;
+
+export interface Session {
   [index: string]: unknown;
   date: number;
   env: string;
-};
+}
 
 // vars
 

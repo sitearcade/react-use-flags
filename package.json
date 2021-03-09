@@ -1,6 +1,6 @@
 {
   "name": "@sitearcade/react-use-flags",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "React support for feature flags.",
   "license": "MIT",
   "homepage": "https://www.sitearcade.com",

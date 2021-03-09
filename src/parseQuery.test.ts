@@ -6,7 +6,7 @@ import {parseQuery} from './parseQuery';
 
 describe('parseQuery()', () => {
   it('fails gracefully', () => {
-    expect(parseQuery()).toMatchInlineSnapshot('Object {}');
+    expect(parseQuery({})).toMatchInlineSnapshot('Object {}');
   });
 
   it('supports `flag` and `flags` keys', () => {
@@ -44,7 +44,7 @@ describe('parseQuery()', () => {
         "false": false,
         "float": 1.23,
         "int": 4,
-        "null": null,
+        "null": false,
         "string": "string",
         "true": true,
       }

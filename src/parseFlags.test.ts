@@ -28,7 +28,7 @@ describe('parseFlags(flags, session, force)', () => {
         boolTrue: true,
         boolFalse: false,
 
-        envTrue: 'testing',
+        envTrue: 'test',
         envFalse: 'production',
 
         dateTrue: past,
@@ -61,7 +61,7 @@ describe('parseFlags(flags, session, force)', () => {
           boolTrue: true,
           boolFalse: false,
 
-          envTrue: 'testing',
+          envTrue: 'test',
           envFalse: 'production',
 
           dateTrue: past,
@@ -96,11 +96,11 @@ describe('parseFlags(flags, session, force)', () => {
         {
           bools: [true, false],
           dates: [past, future],
-          envs: ['testing', 'production'],
+          envs: ['test', 'production'],
           funcs: [alwaysFalse, alwaysTrue],
-          invalid: [null, undefined],
+          invalid: [null],
 
-          flags: [{flag: true}, {flag: 'production'}],
+          flags: [{rule: true}, {rule: 'production'}],
           sessions: [{unreal: 'any value'}, {tier: 'debut'}],
         },
         {tier: 'debut'},
@@ -122,24 +122,24 @@ describe('parseFlags(flags, session, force)', () => {
     expect(
       parseFlags(
         {
-          flagTrue: {flag: true},
-          flagEnvFalse: {flag: 'production'},
-          flagDateFalse: {flag: past},
-          flagFuncTrue: {flag: alwaysTrue},
+          flagTrue: {rule: true},
+          flagEnvFalse: {rule: 'production'},
+          flagDateFalse: {rule: past},
+          flagFuncTrue: {rule: alwaysTrue},
 
           sessStrStrTrue: {tier: 'debut'},
           sessArrStrTrue: {tier: ['debut', 'midlist']},
-          sessStrArrTrue: {env: 'testing'},
-          sessArrArrTrue: {env: ['testing', 'production']},
+          sessStrArrTrue: {env: 'test'},
+          sessArrArrTrue: {env: ['test', 'production']},
 
-          sessAndTrue: {tier: 'debut', env: 'testing'},
+          sessAndTrue: {tier: 'debut', env: 'test'},
           sessAndFalse: {tier: 'debut', env: 'development'},
 
           sessMissing: {unreal: 'any value'},
         },
         {
           tier: 'debut',
-          env: ['testing', 'production'],
+          env: ['test', 'production'],
         },
       ),
     ).toMatchInlineSnapshot(`
@@ -162,15 +162,15 @@ describe('parseFlags(flags, session, force)', () => {
   it('allows `value` in place of boolean state', () => {
     expect(
       parseFlags({
-        withValueTrue: {flag: true, value: 'value'},
-        withValueFalse: {flag: false, value: 'value'},
+        withValueTrue: {rule: true, value: 'value'},
+        withValueFalse: {rule: false, value: 'value'},
         arrayFirst: [
-          {flag: true, value: 'first'},
-          {flag: true, value: 'second'},
+          {rule: true, value: 'first'},
+          {rule: true, value: 'second'},
         ],
         arraySecond: [
-          {flag: false, value: 'first'},
-          {flag: true, value: 'second'},
+          {rule: false, value: 'first'},
+          {rule: true, value: 'second'},
         ],
       }),
     ).toMatchInlineSnapshot(`

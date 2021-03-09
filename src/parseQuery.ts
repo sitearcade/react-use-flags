@@ -42,7 +42,7 @@ const parseVal = (val: string | string[] | undefined): ParsedValue => {
 
 // export
 
-export function parseQuery(query: ParsedUrlQuery): ParsedQuery {
+export function parseQuery(query: ParsedUrlQuery = {}): ParsedQuery {
   return Object.keys(query).reduce((acc, k) => (
     keyRx.test(k) ? {...acc, ...splitQueryFlags(query[k])} :
     preRx.test(k) ? {...acc, [k.replace(preRx, '')]: parseVal(query[k])} :

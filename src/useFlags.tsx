@@ -10,9 +10,9 @@ import {parseQuery} from './parseQuery';
 // types
 
 type FlagProps = PropsWithChildren<{
-  flags: FlagRules;
-  session: RawSession;
-  query: ParsedUrlQuery;
+  flags?: FlagRules;
+  session?: RawSession;
+  query?: ParsedUrlQuery;
 }>
 
 // context

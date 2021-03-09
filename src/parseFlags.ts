@@ -33,7 +33,6 @@ export type FlagValue = string | number | boolean;
 type RawSession = Record<string, unknown>;
 
 export interface Session {
-  [index: string]: unknown;
   date: number;
   env: string;
 }

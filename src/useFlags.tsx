@@ -5,23 +5,25 @@ import type {ParsedUrlQuery} from 'querystring';
 import constate from 'constate';
 import {useMemo} from 'react';
 
-import {FlagRules, parseFlags, SessionMeta} from './parseFlags';
+import {FlagRules, parseFlags, SessionMeta, Flags} from './parseFlags';
 import {parseQuery} from './parseQuery';
 
 // types
 
 type FlagProps = {
-  flags?: FlagRules;
+  flags?: Flags;
+  rules?: FlagRules;
   session?: SessionMeta;
   query?: ParsedUrlQuery;
 }
 
 // context
 
-function FlagsContext({flags, session, query}: FlagProps) {
+function FlagsContext({flags, rules, session, query}: FlagProps) {
   return useMemo(() => (
-    parseFlags(flags, session, parseQuery(query))
-  ), [flags, session]);
+    flags ?? parseFlags(rules, session, parseQuery(query))
+  ), [flags, rules, session]);
 }
 
+export const useFlagRules = FlagsContext;
 export const [FlagsProvider, useFlags] = constate(FlagsContext);

@@ -16,9 +16,8 @@ type Sample = {
   until?: Date;
 };
 
-type FuncRule<T = unknown> = (sess: Session & T) => FlagValue;
-type PlainRule<T = unknown> =
-  | Date | FuncRule<T> | boolean | number | string | null;
+type FuncRule<T = any> = (sess: Session & T) => FlagValue;
+type PlainRule<T = any> = Date | FuncRule<T> | boolean | number | string | null;
 type OrRule = FlagRule[];
 type AndRule = {
   [index: string]: unknown;
@@ -28,9 +27,9 @@ type AndRule = {
 };
 
 export type Flags = Record<FlagName, FlagValue>;
-export type FlagRules<T = unknown> = Record<FlagName, FlagRule<T>>;
+export type FlagRules<T = any> = Record<FlagName, FlagRule<T>>;
 export type FlagName = string;
-export type FlagRule<T = unknown> = AndRule | OrRule | PlainRule<T>;
+export type FlagRule<T = any> = AndRule | OrRule | PlainRule<T>;
 export type FlagValue = boolean | number | string;
 
 export type SessionMeta = Record<string, unknown>;

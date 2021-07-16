@@ -1,10 +1,11 @@
 // import
 
-import {hash} from '@sitearcade/uid';
+import type {ParsedQuery} from './parseQuery';
+
 import {isBefore, isAfter, differenceInMilliseconds as diffMs, isValid as isDate} from 'date-fns';
 import * as R from 'ramda';
 
-import {ParsedQuery} from './parseQuery';
+import {hash} from '@sitearcade/uid';
 
 // types
 
@@ -16,8 +17,8 @@ type Sample = {
 };
 
 type FuncRule<T = any> = (sess: Session & T) => FlagValue;
-type PlainRule<T = any> = FuncRule<T> | string | number | Date | boolean | null;
-type OrRule = Array<FlagRule>;
+type PlainRule<T = any> = Date | FuncRule<T> | boolean | number | string | null;
+type OrRule = FlagRule[];
 type AndRule = {
   [index: string]: unknown;
   rule?: FlagRule;
@@ -28,11 +29,11 @@ type AndRule = {
 export type Flags = Record<FlagName, FlagValue>;
 export type FlagRules<T = any> = Record<FlagName, FlagRule<T>>;
 export type FlagName = string;
-export type FlagRule<T = any> = PlainRule<T> | AndRule | OrRule;
-export type FlagValue = string | number | boolean;
+export type FlagRule<T = any> = AndRule | OrRule | PlainRule<T>;
+export type FlagValue = boolean | number | string;
 
 export type SessionMeta = Record<string, unknown>;
-export type Session = {date: number; env: string;};
+export type Session = {date: number; env: string};
 
 // vars
 

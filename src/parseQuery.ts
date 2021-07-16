@@ -8,12 +8,12 @@ const keyRx = /^flags?$/;
 const preRx = /^flags?:/;
 const intRx = /^\d+$/;
 const floatRx = /^\d*\.\d+$/;
-const commaRx = /[\s,]+/g;
+const commaRx = /\s*,\s*/g;
 
 // types
 
 type ParsedValue = boolean | number | string;
-export type ParsedQuery = Record<string, ParsedValue>
+export type ParsedQuery = Record<string, ParsedValue>;
 
 // fns
 
@@ -22,13 +22,13 @@ const flagNameReducer = (
   k: string,
 ): ParsedQuery => ({...acc, [k]: true});
 
-const splitQueryFlags = (val: string | string[] | undefined) => (
+const splitQueryFlags = (val: string[] | string | undefined) => (
   Array.isArray(val) ?
     val.map((v) => v.trim()) :
     val?.trim().split(commaRx) ?? []
-).reduce(flagNameReducer, {} as ParsedQuery);
+).reduce<ParsedQuery>(flagNameReducer, {});
 
-const parseVal = (val: string | string[] | undefined): ParsedValue => {
+const parseVal = (val: string[] | string | undefined): ParsedValue => {
   val = (Array.isArray(val) ? val[0] : val)?.trim();
 
   // eslint-disable-next-line no-negated-condition

@@ -1,11 +1,12 @@
 // import
 
+import type {FlagRules, SessionMeta, Flags} from './parseFlags';
 import type {ParsedUrlQuery} from 'querystring';
 
 import constate from 'constate';
 import {useMemo} from 'react';
 
-import {FlagRules, parseFlags, SessionMeta, Flags} from './parseFlags';
+import {parseFlags} from './parseFlags';
 import {parseQuery} from './parseQuery';
 
 // types
@@ -15,11 +16,13 @@ type FlagProps = {
   rules?: FlagRules;
   session?: SessionMeta;
   query?: ParsedUrlQuery;
-}
+};
 
 // context
 
-function FlagsContext({flags, rules, session, query}: FlagProps) {
+function FlagsContext(props: FlagProps) {
+  const {flags, rules, session, query} = props;
+
   return useMemo(() => (
     flags ?? parseFlags(rules, session, parseQuery(query))
   ), [flags, rules, session]);
